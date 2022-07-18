@@ -10,7 +10,7 @@ resource "google_compute_instance" "haproxy" {
   machine_type = "e2-micro"
   boot_disk {
     initialize_params {
-      image = "ubuntu-2204-jammy-v20220712a"
+      image = "ubuntu-haproxy"
     }
   }
 network_interface {
