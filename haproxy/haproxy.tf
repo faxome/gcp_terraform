@@ -4,25 +4,22 @@ provider "google" {
   region      = "northamerica-northeast2"
   zone        = "northamerica-northeast2-a"
 }
-resource "google_compute_attached_disk" "default" {
-  disk     = "haproxy-logs"
-  instance = "haproxy"
-}
 resource "google_compute_instance" "haproxy" {
-  name = "haproxy"
+  name         = "haproxy"
   machine_type = "e2-micro"
   boot_disk {
     initialize_params {
       image = "ubuntu-haproxy"
     }
   }
-network_interface {
-  network = "default"
-  access_config {}
+  network_interface {
+    network = "default"
+    access_config {}
+  }
 }
-  lifecycle {
-  ignore_changes = [attached_disk]
-}
+resource "google_compute_attached_disk" "default" {
+  disk     = "haproxy-logs"
+  instance = "haproxy"
 }
 resource "google_compute_firewall" "default" {
 name    = "main-firewall"
@@ -39,8 +36,6 @@ allow {
 
 source_tags = ["web"]
 }
-
 resource "google_compute_network" "default" {
 name = "main-network"
 }
-
