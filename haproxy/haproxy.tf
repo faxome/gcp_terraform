@@ -5,8 +5,8 @@ provider "google" {
   zone        = "northamerica-northeast2-a"
 }
 resource "google_compute_attached_disk" "default" {
-  disk     = haproxy-logs
-  instance = haproxy
+  disk     = "haproxy-logs"
+  instance = "haproxy"
 }
 
 resource "google_compute_instance" "haproxy" {
