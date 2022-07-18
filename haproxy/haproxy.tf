@@ -8,7 +8,6 @@ resource "google_compute_attached_disk" "default" {
   disk     = "haproxy-logs"
   instance = "haproxy"
 }
-
 resource "google_compute_instance" "haproxy" {
   name = "haproxy"
   machine_type = "e2-micro"
@@ -25,3 +24,23 @@ network_interface {
   ignore_changes = [attached_disk]
 }
 }
+resource "google_compute_firewall" "default" {
+name    = "main-firewall"
+network = google_compute_network.default.name
+
+allow {
+  protocol = "icmp"
+}
+
+allow {
+  protocol = "tcp"
+  ports    = ["80", "8080", "1000-2000"]
+}
+
+source_tags = ["web"]
+}
+
+resource "google_compute_network" "default" {
+name = "main-network"
+}
+
