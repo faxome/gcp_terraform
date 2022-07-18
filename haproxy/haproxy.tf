@@ -4,6 +4,10 @@ provider "google" {
   region      = "northamerica-northeast2"
   zone        = "northamerica-northeast2-a"
 }
+resource "google_compute_attached_disk" "default" {
+  disk     = haproxy-logs
+  instance = haproxy
+}
 
 resource "google_compute_instance" "haproxy" {
   name = "haproxy"
@@ -16,5 +20,8 @@ resource "google_compute_instance" "haproxy" {
 network_interface {
   network = "default"
   access_config {}
+}
+  lifecycle {
+  ignore_changes = [attached_disk]
 }
 }
