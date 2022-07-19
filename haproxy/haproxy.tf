@@ -9,7 +9,7 @@ resource "google_compute_instance" "haproxy" {
   machine_type = "e2-micro"
   boot_disk {
     initialize_params {
-      image = "ubuntu-haproxy"
+      image = "ubuntu-2204-jammy-v20220712a"
     }
   }
   network_interface {
@@ -39,3 +39,5 @@ source_tags = ["web"]
 resource "google_compute_network" "default" {
 name = "main-network"
 }
+# Startup script for the instances using this template
+startup_script = data.template_file.startup_script.rendered
