@@ -38,6 +38,6 @@ source_tags = ["web"]
 }
 resource "google_compute_network" "default" {
 name = "main-network"
-}
 # Startup script for the instances using this template
 startup_script = data.template_file.startup_script.rendered
+}
